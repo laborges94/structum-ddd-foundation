@@ -1,6 +1,6 @@
-# 🧱 What is Structum DDD Foundation?
+# 🧱 What is Structum - DDD Foundation?
 
-**Structum DDD Foundation** is a clean and extensible base for building **.NET applications using Domain-Driven Design (DDD)** principles.  
+**Structum - DDD Foundation** is a clean and extensible base for building **.NET applications using Domain-Driven Design (DDD)** principles.  
 It provides a solid starting point with common domain patterns, validation, result handling, and modular organization — helping developers focus on business logic, not boilerplate.
 
 ---
@@ -30,13 +30,18 @@ More features, documentation, and examples coming soon.
 ## 🚀 Usage
 
 Documentation and setup examples will be added soon.  
-Stay tuned for upcoming guides on how to start a project using **Structum DDD Foundation**.
+Stay tuned for upcoming guides on how to start a project using **Structum - DDD Foundation**.
 
 ---
 
-# 🇧🇷 O que é o Structum DDD Foundation?
+## About
+**Structum - DDD Foundation** is being developed by [Lucas Alves Borges](https://github.com/laborges94) under the [MIT license](LICENSE).
 
-**Structum DDD Foundation** é uma base limpa e extensível para construir **aplicações .NET usando os princípios de Domain-Driven Design (DDD)**.  
+---
+
+# 🇧🇷 O que é o Structum - DDD Foundation?
+
+**Structum - DDD Foundation** é uma base limpa e extensível para construir **aplicações .NET usando os princípios de Domain-Driven Design (DDD)**.  
 Ele oferece um ponto de partida sólido com padrões de domínio comuns, validação, tratamento de resultados e uma organização modular — ajudando desenvolvedores a focar na lógica de negócio, não no código repetitivo.
 
 ---
@@ -66,4 +71,9 @@ Novos recursos, documentação e exemplos serão adicionados em breve.
 ## 🚀 Uso
 
 A documentação e os exemplos de configuração serão adicionados em breve.  
-Fique atento aos próximos guias sobre como iniciar um projeto usando o **Structum DDD Foundation**.
+Fique atento aos próximos guias sobre como iniciar um projeto usando o **Structum - DDD Foundation**.
+
+---
+
+## Sobre
+**Structum - DDD Foundation** está sendo desenvolvido por [Lucas Alves Borges](https://github.com/laborges94) sob a licença [MIT](LICENSE).
