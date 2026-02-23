@@ -1,4 +1,4 @@
-namespace StructumDddFoundation.Domain;
+namespace Structum.Core;
 
 /// <summary>
 /// Base class for domain entities with a <see cref="Guid"/> identifier.
