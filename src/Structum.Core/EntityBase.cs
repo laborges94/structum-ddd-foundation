@@ -3,20 +3,36 @@ namespace Structum.Core;
 /// <summary>
 /// Base class for domain entities with a <see cref="Guid"/> identifier.
 /// </summary>
-public abstract class EntityBase : EntityBase<Guid>
+public abstract class EntityBase : EntityBase<Guid>, IAuditable
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EntityBase"/> class with a new <see cref="Guid"/> identifier.
     /// </summary>
-    protected EntityBase() 
-    {
-        Id = Guid.NewGuid(); 
-    }
+    protected EntityBase() => Id = Guid.NewGuid();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EntityBase"/> class with the specified <see cref="Guid"/> identifier.
     /// </summary>
     protected EntityBase(Guid id) : base(id) { }
+
+    /// <summary>
+    /// Gets the audit information for the entity.
+    /// </summary>
+    public AuditInfo AuditInfo { get; protected set; } = AuditInfo.Create();
+
+    /// <summary>
+    /// Marks the entity as deleted with the specified user.
+    /// </summary>
+    /// <param name="deletedBy">The user who deleted the entity.</param>
+    public void MarkAsDeleted(string deletedBy) =>
+        AuditInfo = AuditInfo.WithDeleted(deletedBy);
+
+    /// <summary>
+    /// Marks the entity as updated with the specified user.
+    /// </summary>
+    /// <param name="updatedBy">The user who updated the entity.</param>
+    public void MarkAsUpdated(string updatedBy) =>
+        AuditInfo = AuditInfo.WithUpdated(updatedBy);
 }
 
 /// <summary>
@@ -39,10 +55,7 @@ public abstract class EntityBase<TId>
     /// Initializes a new instance of the <see cref="EntityBase{TId}"/> class with the specified identifier.
     /// </summary>
     /// <param name="id">The identifier of the entity.</param>
-    protected EntityBase(TId id)
-    {
-        Id = id;
-    }
+    protected EntityBase(TId id) => Id = id;
 
     /// <summary>
     /// Determines whether the specified object is equal to the current entity.
