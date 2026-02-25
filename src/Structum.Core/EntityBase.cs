@@ -1,9 +1,14 @@
 namespace Structum.Core;
 
 /// <summary>
-/// Base class for domain entities with a <see cref="Guid"/> identifier.
+/// Base class for domain entities identified by a <see cref="Guid"/>.
+/// Provides built-in support for auditing (<see cref="IAuditable"/>) 
+/// and soft deletion (<see cref="ISoftDeletable"/>).
 /// </summary>
-public abstract class EntityBase : EntityBase<Guid>, IAuditable
+public abstract class EntityBase : 
+    EntityBase<Guid>, 
+    IAuditable,
+    ISoftDeletable
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EntityBase"/> class with a new <see cref="Guid"/> identifier.
@@ -21,11 +26,24 @@ public abstract class EntityBase : EntityBase<Guid>, IAuditable
     public AuditInfo AuditInfo { get; protected set; } = AuditInfo.Create();
 
     /// <summary>
-    /// Marks the entity as deleted with the specified user.
+    /// Gets the soft delete metadata for the entity.
     /// </summary>
-    /// <param name="deletedBy">The user who deleted the entity.</param>
-    public void MarkAsDeleted(string deletedBy) =>
-        AuditInfo = AuditInfo.WithDeleted(deletedBy);
+    public SoftDeleteInfo SoftDeleteInfo { get; protected set; } = SoftDeleteInfo.Create();
+
+    /// <summary>
+    /// Marks the entity as created by the specified user.
+    /// Resets the audit information with creation metadata.
+    /// </summary>
+    /// <param name="createdBy">The user responsible for creating the entity.</param>
+    public void MarkAsCreated(string createdBy) => 
+        AuditInfo = AuditInfo.Create(createdBy);
+
+    /// <summary>
+    /// Marks the entity as soft-deleted by the specified user.
+    /// </summary>
+    /// <param name="deletedBy">The user responsible for deleting the entity.</param>
+    public void MarkAsDeleted(string deletedBy) => 
+        SoftDeleteInfo = SoftDeleteInfo.Create(deletedBy);
 
     /// <summary>
     /// Marks the entity as updated with the specified user.
@@ -37,6 +55,7 @@ public abstract class EntityBase : EntityBase<Guid>, IAuditable
 
 /// <summary>
 /// Base class for domain entities with a generic identifier type.
+/// Provides identity-based equality semantics.
 /// </summary>
 /// <typeparam name="TId">The type of the entity identifier.</typeparam>
 public abstract class EntityBase<TId>
@@ -59,6 +78,7 @@ public abstract class EntityBase<TId>
 
     /// <summary>
     /// Determines whether the specified object is equal to the current entity.
+    /// Two entities are considered equal if they share the same identifier value.
     /// </summary>
     /// <param name="obj">The object to compare with the current entity.</param>
     /// <returns><c>true</c> if the specified object is equal to the current entity; otherwise, <c>false</c>.</returns>
@@ -77,7 +97,7 @@ public abstract class EntityBase<TId>
     }
 
     /// <summary>
-    /// Returns a hash code for the entity.
+    /// Returns a hash code based on the entity identifier.
     /// </summary>
     public override int GetHashCode() => EqualityComparer<TId>.Default.GetHashCode(Id!);
 
@@ -87,7 +107,10 @@ public abstract class EntityBase<TId>
     /// <param name="a">The first entity.</param>
     /// <param name="b">The second entity.</param>
     /// <returns><c>true</c> if the two entities are equal; otherwise, <c>false</c>.</returns>
-    /// <remarks> This operator uses the <see cref="Equals(object?)"/> method to determine equality. </remarks>
+    /// <remarks>
+    /// Equality is determined by comparing the entity identifiers.
+    /// This operator delegates to <see cref="Equals(object?)"/>.
+    /// </remarks>
     /// <seealso cref="Equals(object?)"/>
     public static bool operator ==(EntityBase<TId>? a, EntityBase<TId>? b)
     {

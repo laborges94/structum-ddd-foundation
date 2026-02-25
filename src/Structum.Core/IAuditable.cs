@@ -1,24 +1,26 @@
 namespace Structum.Core;
 
 /// <summary>
-/// Defines an interface for auditable entities, providing properties and methods for tracking creation, update, and deletion information.
+/// Defines a contract for entities that support audit tracking,
+/// including creation and update metadata.
 /// </summary>
 public interface IAuditable
 {
     /// <summary>
-    /// Gets the audit information for the entity.
+    /// Gets the audit metadata associated with the entity,
+    /// including creation and update information.
     /// </summary>
     AuditInfo AuditInfo { get; }
+
+    /// <summary>
+    /// Marks the entity as created by the specified user.
+    /// </summary>
+    /// <param name="createdBy">The user responsible for creating the entity.</param>
+    void MarkAsCreated(string createdBy);
 
     /// <summary>
     /// Marks the entity as updated with the specified user.
     /// </summary>
     /// <param name="updatedBy">The user who updated the entity.</param>
     void MarkAsUpdated(string updatedBy);
-
-    /// <summary>
-    /// Marks the entity as deleted with the specified user.
-    /// </summary>
-    /// <param name="deletedBy">The user who deleted the entity.</param>
-    void MarkAsDeleted(string deletedBy);
 }
