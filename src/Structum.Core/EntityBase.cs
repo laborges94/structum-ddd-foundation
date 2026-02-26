@@ -57,8 +57,11 @@ public abstract class EntityBase :
 /// Base class for domain entities with a generic identifier type.
 /// Provides identity-based equality semantics.
 /// </summary>
-/// <typeparam name="TId">The type of the entity identifier.</typeparam>
-public abstract class EntityBase<TId>
+/// <typeparam name="TId">
+/// The type of the entity identifier.
+/// Ensures that the entity identifier cannot be null.
+/// </typeparam>
+public abstract class EntityBase<TId> where TId : notnull
 {
     /// <summary>
     /// Gets the identifier of the entity.
