@@ -1,4 +1,4 @@
-namespace Structum.Core;
+namespace Structum.Core.Abstractions;
 
 /// <summary>
 /// Marker interface that identifies an entity as an Aggregate Root in Domain-Driven Design (DDD).

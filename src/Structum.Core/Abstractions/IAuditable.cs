@@ -1,4 +1,6 @@
-namespace Structum.Core;
+using Structum.Core.Audition;
+
+namespace Structum.Core.Abstractions;
 
 /// <summary>
 /// Defines a contract for entities that support audit tracking,

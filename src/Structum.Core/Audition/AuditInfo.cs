@@ -1,4 +1,4 @@
-namespace Structum.Core;
+namespace Structum.Core.Audition;
 
 /// <summary>
 /// Represents immutable audit metadata for an entity,

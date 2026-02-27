@@ -1,4 +1,6 @@
-namespace Structum.Core;
+using Structum.Core.SoftDeletion;
+
+namespace Structum.Core.Abstractions;
 
 /// <summary>
 /// Defines a contract for entities that support soft deletion.

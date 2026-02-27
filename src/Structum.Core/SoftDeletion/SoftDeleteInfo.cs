@@ -1,4 +1,4 @@
-namespace Structum.Core;
+namespace Structum.Core.SoftDeletion;
 
 /// <summary>
 /// Represents immutable soft deletion metadata for an entity.
