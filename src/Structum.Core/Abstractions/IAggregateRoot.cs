@@ -6,4 +6,5 @@ namespace Structum.Core.Abstractions;
 /// </summary>
 public interface IAggregateRoot
 {
+    IReadOnlyCollection<IDomainEvent> DomainEvents { get; }    
 }

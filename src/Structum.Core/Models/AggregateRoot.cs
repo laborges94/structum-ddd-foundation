@@ -1,4 +1,4 @@
-using Structum.Core.Abstractions;
+using Structum.Core.Entities;
 
 namespace Structum.Core.Models;
 
@@ -7,8 +7,7 @@ namespace Structum.Core.Models;
 /// Inherits identity, auditing, and soft deletion support from <see cref="EntityBase"/>.
 /// </summary>
 public abstract class AggregateRoot :
-    EntityBase,
-    IAggregateRoot
+    AggregateRoot<Guid>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="AggregateRoot"/> class.
@@ -20,5 +19,5 @@ public abstract class AggregateRoot :
     /// with the specified identifier.
     /// </summary>
     /// <param name="id">The aggregate root identifier.</param>
-    protected AggregateRoot(Guid id) : base(id) { }
+    protected AggregateRoot(Guid id) : base(id) { }    
 }

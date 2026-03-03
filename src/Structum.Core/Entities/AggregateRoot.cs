@@ -15,6 +15,8 @@ public abstract class AggregateRoot<TId> :
     IAggregateRoot
     where TId : notnull
 {
+    private readonly List<IDomainEvent> _domainEvents = [];
+
     /// <summary>
     /// Initializes a new instance of the <see cref="AggregateRoot{TId}"/> class.
     /// </summary>
@@ -26,4 +28,13 @@ public abstract class AggregateRoot<TId> :
     /// </summary>
     /// <param name="id">The aggregate root identifier.</param>
     protected AggregateRoot(TId id) : base(id) { }
+
+    public IReadOnlyCollection<IDomainEvent> DomainEvents
+        => _domainEvents.AsReadOnly();
+
+    protected void AddDomainEvent(IDomainEvent domainEvent)
+        => _domainEvents.Add(domainEvent);
+
+    internal void ClearDomainEvents()
+        => _domainEvents.Clear();    
 }
