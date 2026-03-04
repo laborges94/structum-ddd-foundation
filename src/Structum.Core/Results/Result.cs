@@ -2,27 +2,41 @@ namespace Structum.Core.Results;
 
 public class Result
 {
+    private readonly List<Error> _errors = [];
+
     public bool IsSuccess { get; }
     public bool IsFailure => !IsSuccess;
-    public Error Error { get; }
+    public IReadOnlyList<Error> Errors => _errors;
 
-    protected Result(bool isSuccess, Error error)
+    protected Result(bool isSuccess, IEnumerable<Error>? errors)
     {
-        if (isSuccess && error != Error.None)
-            throw new InvalidOperationException();
+        if (isSuccess && errors is not null && errors.Any())
+            throw new InvalidOperationException("Success result cannot contain errors.");
 
-        if (!isSuccess && error == Error.None)
-            throw new InvalidOperationException();
+        if (!isSuccess && (errors is null || !errors.Any()))
+            throw new InvalidOperationException("Failure result must contain at least one error.");
 
         IsSuccess = isSuccess;
-        Error = error;
+
+        if (errors is not null)
+            _errors.AddRange(errors);
     }
 
     public static Result Success()
-        => new(true, Error.None);
+        => new(true, null);
 
     public static Result Failure(Error error)
-        => new(false, error);
+        => new(false, [error]);
+
+    public static Result Failure(IEnumerable<Error> errors)
+    {
+        var list = errors.ToList();
+
+        if (list.Count == 0)
+            throw new ArgumentException("Failure must contain at least one error.", nameof(errors));
+
+        return new(false, list);
+    }
 }
 
 public class Result<T> : Result
@@ -30,10 +44,10 @@ public class Result<T> : Result
     public T? Value { get; }
 
     protected Result(T value)
-        : base(true, Error.None) => Value = value;
+        : base(true, null) => Value = value;
 
-    protected Result(Error error)
-        : base(false, error) => Value = default;
+    protected Result(IEnumerable<Error> errors)
+        : base(false, errors) => Value = default;
 
     public static Result<T> Success(T value)
     {
@@ -43,9 +57,12 @@ public class Result<T> : Result
         return new(value);
     }
 
-    public static new Result<T> Failure(Error error)
-        => new(error);
+    public new static Result<T> Failure(Error error)
+        => new([error]);
+
+    public new static Result<T> Failure(IEnumerable<Error> errors)
+        => new(errors);
 
     public static implicit operator Result<T>(T value)
-        => Success(value);    
+        => Success(value);
 }

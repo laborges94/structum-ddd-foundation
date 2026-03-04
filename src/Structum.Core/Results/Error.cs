@@ -12,7 +12,13 @@ public sealed record Error
     }
 
     public static Error Create(string code, string message)
-        => new(code, message);
+    {
+        if (string.IsNullOrWhiteSpace(code))
+            throw new ArgumentException("Error code cannot be empty.", nameof(code));
 
-    public static readonly Error None = new(string.Empty, string.Empty);
+        if (string.IsNullOrWhiteSpace(message))
+            throw new ArgumentException("Error message cannot be empty.", nameof(message));
+
+        return new(code, message);
+    }    
 }
