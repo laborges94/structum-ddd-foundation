@@ -82,4 +82,6 @@ public abstract class EntityBase<TId> where TId : notnull
     /// <remarks> This operator returns the negation of the equality operator. </remarks>
     /// <seealso cref="operator ==(EntityBase{TId}?, EntityBase{TId}?)"/>
     public static bool operator !=(EntityBase<TId>? a, EntityBase<TId>? b) => !(a == b);
+
+    public override string ToString() => $"{GetType().Name} [Id={Id}]";
 }

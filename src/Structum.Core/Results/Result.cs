@@ -37,6 +37,12 @@ public class Result
 
         return new(false, list);
     }
+
+    public static Result Failure(Exception exception) => 
+        Failure(Error.Create(
+            exception.GetType().Name,
+            exception.Message
+        ));
 }
 
 public class Result<T> : Result
@@ -63,6 +69,12 @@ public class Result<T> : Result
     public new static Result<T> Failure(IEnumerable<Error> errors)
         => new(errors);
 
+    public new static Result<T> Failure(Exception exception) => 
+        Failure(Error.Create(
+            exception.GetType().Name,
+            exception.Message
+        ));
+
     public static implicit operator Result<T>(T value)
-        => Success(value);
+        => Success(value);    
 }
